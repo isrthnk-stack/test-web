@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rise From The Dead — GnC 2026 COD4 LAN</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+    --red: #ff2b2b;
+    --dark-red: #9d1111;
+    --black: #070707;
+    --dark: #101010;
+    --gray: #171717;
+    --light: #eeeeee;
+    --muted: #999;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--black);
+    color: white;
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+}
+
+/* ================= NAVBAR ================= */
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    background: rgba(0,0,0,.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,0,0,.2);
+    z-index: 1000;
+}
+
+.logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: var(--red);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: #ddd;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+
+.nav-links a:hover {
+    color: var(--red);
+}
+
+.nav-btn {
+    background: var(--red);
+    color: white !important;
+    padding: 10px 20px;
+    clip-path: polygon(8% 0,100% 0,92% 100%,0 100%);
+}
+
+/* ================= HERO ================= */
+
+.hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 120px 8% 80px;
+    background:
+        linear-gradient(90deg, #050505 0%, rgba(5,5,5,.85) 40%, rgba(5,5,5,.35)),
+        linear-gradient(0deg, #070707, transparent 50%),
+        url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=2000&q=80")
+        center/cover;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(
+            135deg,
+            transparent,
+            transparent 8px,
+            rgba(255,255,255,.015) 8px,
+            rgba(255,255,255,.015) 10px
+        );
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+}
+
+.small-title {
+    color: var(--red);
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(55px, 9vw, 110px);
+    line-height: .9;
+    text-transform: uppercase;
+    text-shadow: 6px 6px 0 #000;
+}
+
+.hero h1 span {
+    color: var(--red);
+}
+
+.subtitle {
+    font-size: 22px;
+    color: #ccc;
+    margin: 25px 0;
+    max-width: 650px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 35px;
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: .3s;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-red {
+    background: var(--red);
+    color: white;
+    clip-path: polygon(7% 0,100% 0,93% 100%,0 100%);
+}
+
+.btn-red:hover {
+    background: #ff4c4c;
+    transform: translateY(-3px);
+}
+
+.btn-outline {
+    border: 1px solid #777;
+    color: white;
+}
+
+.btn-outline:hover {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+/* ================= COUNTDOWN ================= */
+
+.countdown-section {
+    background: #0d0d0d;
+    padding: 25px 8%;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    text-align: center;
+}
+
+.time-box {
+    min-width: 90px;
+}
+
+.time-box strong {
+    font-family: 'Oswald';
+    font-size: 42px;
+    color: var(--red);
+}
+
+.time-box span {
+    display: block;
+    color: #888;
+    letter-spacing: 2px;
+}
+
+/* ================= SECTIONS ================= */
+
+section {
+    padding: 100px 8%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title small {
+    color: var(--red);
+    letter-spacing: 4px;
+    font-weight: 700;
+}
+
+.section-title h2 {
+    font-family: 'Oswald';
+    font-size: 55px;
+    text-transform: uppercase;
+}
+
+/* ================= CARDS ================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: linear-gradient(145deg,#181818,#0d0d0d);
+    border: 1px solid #292929;
+    padding: 35px 25px;
+    position: relative;
+    transition: .3s;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 0;
+    background: var(--red);
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    border-color: #555;
+}
+
+.card:hover::before {
+    height: 100%;
+}
+
+.card h3 {
+    font-family: 'Oswald';
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #999;
+}
+
+/* ================= RULES ================= */
+
+.rules {
+    background: #0d0d0d;
+}
+
+.rule-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.rule {
+    padding: 25px;
+    border-left: 3px solid var(--red);
+    background: #151515;
+}
+
+.rule strong {
+    color: var(--red);
+    margin-right: 10px;
+}
+
+/* ================= REGISTRATION ================= */
+
+.registration {
+    background:
+        linear-gradient(rgba(5,5,5,.94),rgba(5,5,5,.97)),
+        url("https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1800&q=80")
+        center/cover;
+}
+
+.form-container {
+    max-width: 900px;
+    margin: auto;
+    background: rgba(15,15,15,.95);
+    border: 1px solid #333;
+    padding: 45px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field.full {
+    grid-column: 1/-1;
+}
+
+label {
+    color: #aaa;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+input,
+select,
+textarea {
+    background: #080808;
+    border: 1px solid #333;
+    color: white;
+    padding: 14px;
+    outline: none;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--red);
+}
+
+.player-list {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #333;
+}
+
+.player-list h3 {
+    font-family: 'Oswald';
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.submit-area {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+    background: #050505;
+    border-top: 1px solid #222;
+    padding: 50px 8%;
+    text-align: center;
+}
+
+footer h2 {
+    font-family: 'Oswald';
+    font-size: 30px;
+}
+
+footer span {
+    color: var(--red);
+}
+
+footer p {
+    color: #666;
+    margin-top: 10px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px) {
+
+    .cards {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .rule-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:600px) {
+
+    section {
+        padding: 70px 5%;
+    }
+
+    .hero {
+        padding: 120px 5% 70px;
+    }
+
+    .cards,
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .countdown {
+        gap: 15px;
+    }
+
+    .time-box strong {
+        font-size: 28px;
+    }
+
+    .form-container {
+        padding: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<nav>
+
+    <div class="logo">
+        <span>GNC</span> ESPORTS
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="#about">Tournament</a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#register">Register</a></li>
+    </ul>
+
+    <a href="#register" class="nav-btn">REGISTER</a>
+
+</nav>
+
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="small-title">
+            Genocide E-Sports Presents
+        </div>
+
+        <h1>
+            RISE<br>
+            FROM<br>
+            <span>THE DEAD</span>
+        </h1>
+
+        <p class="subtitle">
+            GnC 2026 COD4 LAN Tournament.
+            The battlefield is calling. Only the strongest will survive.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#register" class="btn btn-red">
+                Register Your Team
+            </a>
+
+            <a href="#about" class="btn btn-outline">
+                Tournament Info
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- COUNTDOWN -->
+
+<div class="countdown-section">
+
+    <div class="countdown">
+
+        <div class="time-box">
+            <strong id="days">00</strong>
+            <span>DAYS</span>
+        </div>
+
+        <div class="time-box">
+            <strong id="hours">00</strong>
+            <span>HOURS</span>
+        </div>
+
+        <div class="time-box">
+            <strong id="minutes">00</strong>
+            <span>MINUTES</span>
+        </div>
+
+        <div class="time-box">
+            <strong id="seconds">00</strong>
+            <span>SECONDS</span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TOURNAMENT INFO -->
+
+<section id="about">
+
+    <div class="section-title">
+
+        <small>THE BATTLEFIELD</small>
+
+        <h2>Tournament Info</h2>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>🎮 GAME</h3>
+
+            <p>
+                Call of Duty 4:
+                Modern Warfare
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>👥 FORMAT</h3>
+
+            <p>
+                LAN • Team Based
+                Competitive Matches
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>🏆 PRIZE</h3>
+
+            <p>
+                Prize pool details
+                will be announced.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>📍 LOCATION</h3>
+
+            <p>
+                GnC 2026 LAN Arena
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RULES -->
+
+<section class="rules" id="rules">
+
+    <div class="section-title">
+
+        <small>KNOW THE RULES</small>
+
+        <h2>Battle Rules</h2>
+
+    </div>
+
+
+    <div class="rule-grid">
+
+        <div class="rule">
+            <strong>01</strong>
+            Teams must register before the deadline.
+        </div>
+
+        <div class="rule">
+            <strong>02</strong>
+            Players must use their registered accounts.
+        </div>
+
+        <div class="rule">
+            <strong>03</strong>
+            No cheating, hacking or unauthorized software.
+        </div>
+
+        <div class="rule">
+            <strong>04</strong>
+            All players must follow LAN administrator instructions.
+        </div>
+
+        <div class="rule">
+            <strong>05</strong>
+            Unsportsmanlike behaviour may result in disqualification.
+        </div>
+
+        <div class="rule">
+            <strong>06</strong>
+            Tournament administration decisions are final.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- REGISTRATION -->
+
+<section class="registration" id="register">
+
+    <div class="section-title">
+
+        <small>ENTER THE BATTLE</small>
+
+        <h2>Team Registration</h2>
+
+    </div>
+
+
+    <div class="form-container">
+
+        <form id="registrationForm">
+
+            <div class="form-grid">
+
+                <div class="field">
+
+                    <label>Team Name</label>
+
+                    <input
+                        type="text"
+                        id="teamName"
+                        placeholder="Enter team name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Team Captain</label>
+
+                    <input
+                        type="text"
+                        id="captain"
+                        placeholder="Captain name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Phone / WhatsApp</label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="+94 XX XXX XXXX"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="team@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field full">
+
+                    <label>Team / Community</label>
+
+                    <input
+                        type="text"
+                        id="community"
+                        placeholder="Your gaming community"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="player-list">
+
+                <h3>PLAYER ROSTER</h3>
+
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label>Player 1</label>
+                        <input type="text" placeholder="In-game name" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Player 2</label>
+                        <input type="text" placeholder="In-game name" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Player 3</label>
+                        <input type="text" placeholder="In-game name" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Player 4</label>
+                        <input type="text" placeholder="In-game name" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Player 5</label>
+                        <input type="text" placeholder="In-game name" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Substitute</label>
+                        <input type="text" placeholder="Optional">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="submit-area">
+
+                <button class="btn btn-red" type="submit">
+                    SUBMIT REGISTRATION
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <h2>
+        <span>GENOCIDE</span> E-SPORTS
+    </h2>
+
+    <p>
+        Rise From The Dead • GnC 2026 COD4 LAN
+    </p>
+
+    <p>
+        © 2026 Genocide E-Sports. All rights reserved.
+    </p>
+
+</footer>
+
+
+<script>
+
+/* ================= COUNTDOWN ================= */
+
+/*
+   CHANGE THIS DATE TO YOUR TOURNAMENT DATE.
+*/
+
+const tournamentDate =
+    new Date("December 20, 2026 10:00:00").getTime();
+
+
+function updateCountdown() {
+
+    const now = new Date().getTime();
+
+    const distance = tournamentDate - now;
+
+    if (distance < 0) {
+
+        document.getElementById("days").innerText = "00";
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
+
+        return;
+
+    }
+
+    const days =
+        Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    const hours =
+        Math.floor(
+            (distance % (1000 * 60 * 60 * 24))
+            / (1000 * 60 * 60)
+        );
+
+    const minutes =
+        Math.floor(
+            (distance % (1000 * 60 * 60))
+            / (1000 * 60)
+        );
+
+    const seconds =
+        Math.floor(
+            (distance % (1000 * 60))
+            / 1000
+        );
+
+
+    document.getElementById("days").innerText =
+        String(days).padStart(2, "0");
+
+    document.getElementById("hours").innerText =
+        String(hours).padStart(2, "0");
+
+    document.getElementById("minutes").innerText =
+        String(minutes).padStart(2, "0");
+
+    document.getElementById("seconds").innerText =
+        String(seconds).padStart(2, "0");
+}
+
+
+setInterval(updateCountdown, 1000);
+
+updateCountdown();
+
+
+/* ================= FORM ================= */
+
+document
+    .getElementById("registrationForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const team =
+            document.getElementById("teamName").value;
+
+        alert(
+            "Registration received for " +
+            team +
+            "!\n\nGnC 2026 organizers will contact your team."
+        );
+
+        this.reset();
+
+    });
+
+</script>
+
+</body>
+</html>
